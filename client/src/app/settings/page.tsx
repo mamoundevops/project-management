@@ -1,5 +1,8 @@
+'use client'
 import Header from "@/components/Header";
+import { useGetAuthUserQuery, useGetProjectsQuery } from "@/state/api";
 import React from "react";
+
 
 const Settings = () => {
   const userSettings = {
@@ -8,6 +11,13 @@ const Settings = () => {
     teamName: "Development Team",
     roleName: "Developer",
   };
+
+
+ 
+  const { data: currentUser } = useGetAuthUserQuery({});
+console.log(`currentUserStart : ${currentUser} .CurrentUserDone`)
+  const currentUserDetails = currentUser?.userDetails;
+  console.log(`currentUserStart : ${currentUserDetails} .CurrentUserDone`)
 
   const labelStyles = "block text-sm font-medium dark:text-white";
   const textStyles =
@@ -19,11 +29,11 @@ const Settings = () => {
       <div className="space-y-4">
         <div>
           <label className={labelStyles}>Username</label>
-          <div className={textStyles}>{userSettings.username}</div>
+          <div className={textStyles}>{currentUser ? currentUserDetails?.username : userSettings.username}</div>
         </div>
         <div>
           <label className={labelStyles}>Email</label>
-          <div className={textStyles}>{userSettings.email}</div>
+          <div className={textStyles}>{currentUser ? currentUserDetails?.email : userSettings.email}</div>
         </div>
         <div>
           <label className={labelStyles}>Team</label>
